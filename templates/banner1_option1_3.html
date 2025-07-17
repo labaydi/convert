@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startseite</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 10px;
+        }
+        .dropbtn {
+            background-color: #ffcc00;
+            color: black;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            width: 150px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown-content .option {
+            padding: 10px;
+            text-align: left;
+            display: block;
+            background-color: #ddd;
+            cursor: pointer;
+        }
+        .dropdown-content .option:hover {
+            background-color: #bbb;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+        .links a {
+            display: block;
+            margin: 5px;
+            padding: 10px;
+            background-color: #ffcc00;
+            color: black;
+            text-decoration: none;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .links a:hover {
+            background-color: #ffa500;
+        }
+    </style>
+</head>
+<body>
+    <h1>Willkommen auf der Startseite</h1>
+    <button class="dropbtn" onclick="window.location.href='index.html'">Home</button>
+
+    <!-- DROPDOWN BANNER -->
+    <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown(1)">Banner 1</button>
+        <div class="dropdown-content" id="dropdown1">
+            <a href="banner1_option1_1.html" class="option">Option 1.1</a>
+            <a href="banner1_option1_2.html" class="option">Option 1.2</a>
+            <a href="banner1_option1_3.html" class="option">Option 1.3</a>
+            <a href="banner1_option1_4.html" class="option">Option 1.4</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown(2)">Banner 2</button>
+        <div class="dropdown-content" id="dropdown2">
+            <div class="option">Option 2.1</div>
+            <div class="option">Option 2.2</div>
+            <div class="option">Option 2.3</div>
+            <div class="option">Option 2.4</div>
+        </div>
+    </div>
+<!----------------------------------------------------------------------------------- -->
+    <!-- DATEIKONVERTIERUNG -->
+    <h2>Dateikonvertierung</h2>
+    <form id="uploadForm">
+	  <label for="email">E-Mail-Adresse:</label>
+	  <input type="email" id="email" name="email" required><br><br>
+
+	  <!-- Deine anderen Felder bleiben wie gehabt -->
+	  <input type="file" id="files" name="files" multiple required><br><br>
+
+	  <label for="from_format">Von Format:</label>
+	  <select id="from_format" name="from_format" required>
+	    <option value=".ldif">.ldif</option>
+	    <option value=".vcf">.vcf</option>
+	    <option value=".csv">.csv</option>
+	  </select><br><br>
+
+	  <label for="to_format">Zu Format:</label>
+	  <select id="to_format" name="to_format" required>
+	    <option value=".ldif">.ldif</option>
+	    <option value=".vcf">.vcf</option>
+	    <option value=".csv">.csv</option>
+	  </select><br><br>
+
+	  <button type="submit">Konvertieren</button>
+	</form>
+	<div id="result"></div>
+
+	<script>
+	document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+	  e.preventDefault();
+
+	  const formData = new FormData();
+	  const files = document.getElementById('files').files;
+	  const email = document.getElementById('email').value;
+	  const fromFormat = document.getElementById('from_format').value;
+	  const toFormat = document.getElementById('to_format').value;
+
+	  formData.append('email', email);
+	  formData.append('from_format', fromFormat);
+	  formData.append('to_format', toFormat);
+
+	  for (let file of files) {
+	    formData.append('files', file);
+	  }
+
+	  const response = await fetch('/convert', {
+	    method: 'POST',
+	    body: formData
+	  });
+
+	  const result = await response.text();
+	  document.getElementById('result').innerText = result;
+	});
+	</script>
+
+
+</body>
+</html>
