@@ -1,0 +1,26 @@
+ Schritte zum Commit & Push:
+cd pfad/zum/projektordner
+
+1. Änderungen zum Commit vormerken
+bash
+Kopieren
+Bearbeiten
+git add .
+(Das . bedeutet: alle geänderten Dateien)
+
+
+2. Commit mit Nachricht
+bash
+Kopieren
+Bearbeiten
+git commit -m "Fix: CORS aktiviert für GitHub Pages Zugriff"
+
+3. Änderungen auf GitHub hochladen (pushen)
+bash
+Kopieren
+Bearbeiten
+git push origin main
+☝️ Falls dein Branch anders heißt (z. B. master oder dev), ersetze main entsprechend.
+
+
+
